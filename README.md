@@ -16,7 +16,7 @@ You will need steam-user v4.2.0 or later and Node.js v8 or later to use globalof
 
 First, install it from npm:
 
-	$ npm install globaloffensive
+	$ npm install globaloffensive-pb-only
 
 Require the module and call its constructor with your SteamUser instance:
 
