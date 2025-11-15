@@ -1,6 +1,6 @@
 {
 	"name": "globaloffensive-pb-only",
-	"version": "3.2.2",
+	"version": "3.2.3",
 	"description": "Exposes a simple API for interacting with the Counter-Strike: Global Offensive/CS2 game coordinator",
 	"keywords": [
 		"csgo",
