@@ -27,7 +27,7 @@
      * @property {number} k_EMsgGCDelete=1004 k_EMsgGCDelete value
      * @property {number} k_EMsgGCVerifyCacheSubscription=1005 k_EMsgGCVerifyCacheSubscription value
      * @property {number} k_EMsgGCNameItem=1006 k_EMsgGCNameItem value
-     * @property {number} k_EMsgGCUnlockCrate=1007 k_EMsgGCUnlockCrate value
+     * @property {number} k_EMsgGCUnlockCrate_DEPRECATED=1007 k_EMsgGCUnlockCrate_DEPRECATED value
      * @property {number} k_EMsgGCUnlockCrateResponse=1008 k_EMsgGCUnlockCrateResponse value
      * @property {number} k_EMsgGCPaintItem=1009 k_EMsgGCPaintItem value
      * @property {number} k_EMsgGCPaintItemResponse=1010 k_EMsgGCPaintItemResponse value
@@ -164,9 +164,9 @@
      * @property {number} k_EMsgGCRecurringSubscriptionStatus=2530 k_EMsgGCRecurringSubscriptionStatus value
      * @property {number} k_EMsgGCAdjustEquipSlotsManual=2531 k_EMsgGCAdjustEquipSlotsManual value
      * @property {number} k_EMsgGCAdjustEquipSlotsShuffle=2532 k_EMsgGCAdjustEquipSlotsShuffle value
-     * @property {number} k_EMsgGCNameItemAndEquip=2533 k_EMsgGCNameItemAndEquip value
      * @property {number} k_EMsgGCOpenCrate=2534 k_EMsgGCOpenCrate value
      * @property {number} k_EMsgGCAcknowledgeRentalExpiration=2535 k_EMsgGCAcknowledgeRentalExpiration value
+     * @property {number} k_EMsgGCVolatileItemLoadContents=2536 k_EMsgGCVolatileItemLoadContents value
      */
     $root.EGCItemMsg = (function() {
         var valuesById = {}, values = Object.create(valuesById);
@@ -177,7 +177,7 @@
         values[valuesById[1004] = "k_EMsgGCDelete"] = 1004;
         values[valuesById[1005] = "k_EMsgGCVerifyCacheSubscription"] = 1005;
         values[valuesById[1006] = "k_EMsgGCNameItem"] = 1006;
-        values[valuesById[1007] = "k_EMsgGCUnlockCrate"] = 1007;
+        values[valuesById[1007] = "k_EMsgGCUnlockCrate_DEPRECATED"] = 1007;
         values[valuesById[1008] = "k_EMsgGCUnlockCrateResponse"] = 1008;
         values[valuesById[1009] = "k_EMsgGCPaintItem"] = 1009;
         values[valuesById[1010] = "k_EMsgGCPaintItemResponse"] = 1010;
@@ -314,9 +314,9 @@
         values[valuesById[2530] = "k_EMsgGCRecurringSubscriptionStatus"] = 2530;
         values[valuesById[2531] = "k_EMsgGCAdjustEquipSlotsManual"] = 2531;
         values[valuesById[2532] = "k_EMsgGCAdjustEquipSlotsShuffle"] = 2532;
-        values[valuesById[2533] = "k_EMsgGCNameItemAndEquip"] = 2533;
         values[valuesById[2534] = "k_EMsgGCOpenCrate"] = 2534;
         values[valuesById[2535] = "k_EMsgGCAcknowledgeRentalExpiration"] = 2535;
+        values[valuesById[2536] = "k_EMsgGCVolatileItemLoadContents"] = 2536;
         return values;
     })();
     
@@ -390,6 +390,8 @@
      * @property {number} k_EGCItemCustomizationNotification_NameBaseItem=1019 k_EGCItemCustomizationNotification_NameBaseItem value
      * @property {number} k_EGCItemCustomizationNotification_RemoveItemName=1030 k_EGCItemCustomizationNotification_RemoveItemName value
      * @property {number} k_EGCItemCustomizationNotification_RemoveSticker=1053 k_EGCItemCustomizationNotification_RemoveSticker value
+     * @property {number} k_EGCItemCustomizationNotification_ExtractSticker=1054 k_EGCItemCustomizationNotification_ExtractSticker value
+     * @property {number} k_EGCItemCustomizationNotification_EncapsulateSticker=1055 k_EGCItemCustomizationNotification_EncapsulateSticker value
      * @property {number} k_EGCItemCustomizationNotification_ApplySticker=1086 k_EGCItemCustomizationNotification_ApplySticker value
      * @property {number} k_EGCItemCustomizationNotification_StatTrakSwap=1088 k_EGCItemCustomizationNotification_StatTrakSwap value
      * @property {number} k_EGCItemCustomizationNotification_RemovePatch=1089 k_EGCItemCustomizationNotification_RemovePatch value
@@ -419,6 +421,8 @@
         values[valuesById[1019] = "k_EGCItemCustomizationNotification_NameBaseItem"] = 1019;
         values[valuesById[1030] = "k_EGCItemCustomizationNotification_RemoveItemName"] = 1030;
         values[valuesById[1053] = "k_EGCItemCustomizationNotification_RemoveSticker"] = 1053;
+        values[valuesById[1054] = "k_EGCItemCustomizationNotification_ExtractSticker"] = 1054;
+        values[valuesById[1055] = "k_EGCItemCustomizationNotification_EncapsulateSticker"] = 1055;
         values[valuesById[1086] = "k_EGCItemCustomizationNotification_ApplySticker"] = 1086;
         values[valuesById[1088] = "k_EGCItemCustomizationNotification_StatTrakSwap"] = 1088;
         values[valuesById[1089] = "k_EGCItemCustomizationNotification_RemovePatch"] = 1089;

@@ -92,7 +92,7 @@
          * @interface ICGCStorePurchaseInit_LineItem
          * @property {number|null} [item_def_id] CGCStorePurchaseInit_LineItem item_def_id
          * @property {number|null} [quantity] CGCStorePurchaseInit_LineItem quantity
-         * @property {number|null} [cost_in_local_currency] CGCStorePurchaseInit_LineItem cost_in_local_currency
+         * @property {number|Long|null} [cost_in_local_currency] CGCStorePurchaseInit_LineItem cost_in_local_currency
          * @property {number|null} [purchase_type] CGCStorePurchaseInit_LineItem purchase_type
          * @property {number|Long|null} [supplemental_data] CGCStorePurchaseInit_LineItem supplemental_data
          */
@@ -130,11 +130,11 @@
     
         /**
          * CGCStorePurchaseInit_LineItem cost_in_local_currency.
-         * @member {number} cost_in_local_currency
+         * @member {number|Long} cost_in_local_currency
          * @memberof CGCStorePurchaseInit_LineItem
          * @instance
          */
-        CGCStorePurchaseInit_LineItem.prototype.cost_in_local_currency = 0;
+        CGCStorePurchaseInit_LineItem.prototype.cost_in_local_currency = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
     
         /**
          * CGCStorePurchaseInit_LineItem purchase_type.
@@ -181,7 +181,7 @@
             if (message.quantity != null && Object.hasOwnProperty.call(message, "quantity"))
                 writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.quantity);
             if (message.cost_in_local_currency != null && Object.hasOwnProperty.call(message, "cost_in_local_currency"))
-                writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.cost_in_local_currency);
+                writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.cost_in_local_currency);
             if (message.purchase_type != null && Object.hasOwnProperty.call(message, "purchase_type"))
                 writer.uint32(/* id 4, wireType 0 =*/32).uint32(message.purchase_type);
             if (message.supplemental_data != null && Object.hasOwnProperty.call(message, "supplemental_data"))
@@ -231,7 +231,7 @@
                         break;
                     }
                 case 3: {
-                        message.cost_in_local_currency = reader.uint32();
+                        message.cost_in_local_currency = reader.uint64();
                         break;
                     }
                 case 4: {
@@ -284,8 +284,8 @@
                 if (!$util.isInteger(message.quantity))
                     return "quantity: integer expected";
             if (message.cost_in_local_currency != null && message.hasOwnProperty("cost_in_local_currency"))
-                if (!$util.isInteger(message.cost_in_local_currency))
-                    return "cost_in_local_currency: integer expected";
+                if (!$util.isInteger(message.cost_in_local_currency) && !(message.cost_in_local_currency && $util.isInteger(message.cost_in_local_currency.low) && $util.isInteger(message.cost_in_local_currency.high)))
+                    return "cost_in_local_currency: integer|Long expected";
             if (message.purchase_type != null && message.hasOwnProperty("purchase_type"))
                 if (!$util.isInteger(message.purchase_type))
                     return "purchase_type: integer expected";
@@ -312,7 +312,14 @@
             if (object.quantity != null)
                 message.quantity = object.quantity >>> 0;
             if (object.cost_in_local_currency != null)
-                message.cost_in_local_currency = object.cost_in_local_currency >>> 0;
+                if ($util.Long)
+                    (message.cost_in_local_currency = $util.Long.fromValue(object.cost_in_local_currency)).unsigned = true;
+                else if (typeof object.cost_in_local_currency === "string")
+                    message.cost_in_local_currency = parseInt(object.cost_in_local_currency, 10);
+                else if (typeof object.cost_in_local_currency === "number")
+                    message.cost_in_local_currency = object.cost_in_local_currency;
+                else if (typeof object.cost_in_local_currency === "object")
+                    message.cost_in_local_currency = new $util.LongBits(object.cost_in_local_currency.low >>> 0, object.cost_in_local_currency.high >>> 0).toNumber(true);
             if (object.purchase_type != null)
                 message.purchase_type = object.purchase_type >>> 0;
             if (object.supplemental_data != null)
@@ -343,7 +350,11 @@
             if (options.defaults) {
                 object.item_def_id = 0;
                 object.quantity = 0;
-                object.cost_in_local_currency = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.cost_in_local_currency = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.cost_in_local_currency = options.longs === String ? "0" : 0;
                 object.purchase_type = 0;
                 if ($util.Long) {
                     var long = new $util.Long(0, 0, true);
@@ -356,7 +367,10 @@
             if (message.quantity != null && message.hasOwnProperty("quantity"))
                 object.quantity = message.quantity;
             if (message.cost_in_local_currency != null && message.hasOwnProperty("cost_in_local_currency"))
-                object.cost_in_local_currency = message.cost_in_local_currency;
+                if (typeof message.cost_in_local_currency === "number")
+                    object.cost_in_local_currency = options.longs === String ? String(message.cost_in_local_currency) : message.cost_in_local_currency;
+                else
+                    object.cost_in_local_currency = options.longs === String ? $util.Long.prototype.toString.call(message.cost_in_local_currency) : options.longs === Number ? new $util.LongBits(message.cost_in_local_currency.low >>> 0, message.cost_in_local_currency.high >>> 0).toNumber(true) : message.cost_in_local_currency;
             if (message.purchase_type != null && message.hasOwnProperty("purchase_type"))
                 object.purchase_type = message.purchase_type;
             if (message.supplemental_data != null && message.hasOwnProperty("supplemental_data"))
@@ -21909,6 +21923,7 @@
          * @property {number|Long|null} [tool_item_id] CMsgOpenCrate tool_item_id
          * @property {number|Long|null} [subject_item_id] CMsgOpenCrate subject_item_id
          * @property {boolean|null} [for_rental] CMsgOpenCrate for_rental
+         * @property {number|null} [points_remaining] CMsgOpenCrate points_remaining
          */
     
         /**
@@ -21951,6 +21966,14 @@
         CMsgOpenCrate.prototype.for_rental = false;
     
         /**
+         * CMsgOpenCrate points_remaining.
+         * @member {number} points_remaining
+         * @memberof CMsgOpenCrate
+         * @instance
+         */
+        CMsgOpenCrate.prototype.points_remaining = 0;
+    
+        /**
          * Creates a new CMsgOpenCrate instance using the specified properties.
          * @function create
          * @memberof CMsgOpenCrate
@@ -21980,6 +22003,8 @@
                 writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.subject_item_id);
             if (message.for_rental != null && Object.hasOwnProperty.call(message, "for_rental"))
                 writer.uint32(/* id 3, wireType 0 =*/24).bool(message.for_rental);
+            if (message.points_remaining != null && Object.hasOwnProperty.call(message, "points_remaining"))
+                writer.uint32(/* id 4, wireType 0 =*/32).uint32(message.points_remaining);
             return writer;
         };
     
@@ -22028,6 +22053,10 @@
                         message.for_rental = reader.bool();
                         break;
                     }
+                case 4: {
+                        message.points_remaining = reader.uint32();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -22072,6 +22101,9 @@
             if (message.for_rental != null && message.hasOwnProperty("for_rental"))
                 if (typeof message.for_rental !== "boolean")
                     return "for_rental: boolean expected";
+            if (message.points_remaining != null && message.hasOwnProperty("points_remaining"))
+                if (!$util.isInteger(message.points_remaining))
+                    return "points_remaining: integer expected";
             return null;
         };
     
@@ -22107,6 +22139,8 @@
                     message.subject_item_id = new $util.LongBits(object.subject_item_id.low >>> 0, object.subject_item_id.high >>> 0).toNumber(true);
             if (object.for_rental != null)
                 message.for_rental = Boolean(object.for_rental);
+            if (object.points_remaining != null)
+                message.points_remaining = object.points_remaining >>> 0;
             return message;
         };
     
@@ -22135,6 +22169,7 @@
                 } else
                     object.subject_item_id = options.longs === String ? "0" : 0;
                 object.for_rental = false;
+                object.points_remaining = 0;
             }
             if (message.tool_item_id != null && message.hasOwnProperty("tool_item_id"))
                 if (typeof message.tool_item_id === "number")
@@ -22148,6 +22183,8 @@
                     object.subject_item_id = options.longs === String ? $util.Long.prototype.toString.call(message.subject_item_id) : options.longs === Number ? new $util.LongBits(message.subject_item_id.low >>> 0, message.subject_item_id.high >>> 0).toNumber(true) : message.subject_item_id;
             if (message.for_rental != null && message.hasOwnProperty("for_rental"))
                 object.for_rental = message.for_rental;
+            if (message.points_remaining != null && message.hasOwnProperty("points_remaining"))
+                object.points_remaining = message.points_remaining;
             return object;
         };
     
